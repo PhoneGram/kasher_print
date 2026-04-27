@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1e293b">
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="manifest" href="manifest.json">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Tajawal', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <title>الكاشير - المخزون</title>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen transition-colors duration-300">
+
+    <!-- Header Container -->
+    <div id="header-container"></div>
+
+    <!-- Main Content -->
+    <main class="pt-20 pb-24 px-4 max-w-2xl mx-auto">
+        
+        <h2 class="text-xl font-bold mb-4 text-center">📦 المخزون</h2>
+
+        <!-- بطاقة الأوراق المتوفرة -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 mb-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">📄 الأوراق المتوفرة</p>
+                    <p id="available-papers" class="text-3xl font-bold text-blue-600 dark:text-blue-400">0</p>
+                </div>
+                <button id="add-inventory-btn" class="bg-green-500 hover:bg-green-600 text-white w-14 h-14 rounded-xl text-2xl font-bold transition-colors shadow-md flex items-center justify-center">
+                    +
+                </button>
+            </div>
+        </div>
+
+        <!-- رسالة عدم وجود حركات -->
+        <div id="no-inventory-msg" class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 text-center hidden">
+            <p class="text-gray-500 dark:text-gray-400 text-lg">لا توجد حركات مخزون حتى الآن</p>
+        </div>
+
+        <!-- سجل حركات المخزون -->
+        <div id="inventory-list" class="space-y-3"></div>
+
+    </main>
+
+    <!-- نافذة إضافة حركة مخزون (مودال) -->
+    <div id="add-inventory-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-sm p-6">
+            
+            <h3 class="text-lg font-bold mb-4 text-center">📦 حركة مخزون جديدة</h3>
+
+            <form id="add-inventory-form" class="space-y-4">
+                
+                <!-- اختيار الحالة -->
+                <div>
+                    <label class="block text-sm font-medium mb-3">الحالة <span class="text-red-500">*</span></label>
+                    <div class="flex gap-3">
+                        <button type="button" id="status-purchase" class="flex-1 bg-green-100 dark:bg-green-900/50 border-2 border-green-300 dark:border-green-700 rounded-xl py-3 font-bold text-green-700 dark:text-green-300 hover:bg-green-200 dark:hover:bg-green-900/70 transition-colors">
+                            🟢 شراء جديد
+                        </button>
+                        <button type="button" id="status-damage" class="flex-1 bg-red-100 dark:bg-red-900/50 border-2 border-red-300 dark:border-red-700 rounded-xl py-3 font-bold text-red-700 dark:text-red-300 hover:bg-red-200 dark:hover:bg-red-900/70 transition-colors">
+                            🔴 تلف
+                        </button>
+                    </div>
+                    <input type="hidden" id="inventory-status" value="">
+                </div>
+
+                <!-- العدد -->
+                <div>
+                    <label class="block text-sm font-medium mb-2">العدد <span class="text-red-500">*</span></label>
+                    <div class="flex items-center gap-3">
+                        <button type="button" id="decrease-inv-qty" class="bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 w-12 h-12 rounded-xl text-2xl font-bold transition-colors">-</button>
+                        <input type="number" id="inv-qty" value="1" min="1" class="flex-1 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 text-center text-lg font-bold focus:outline-none focus:ring-2 focus:ring-blue-500" readonly required>
+                        <button type="button" id="increase-inv-qty" class="bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 w-12 h-12 rounded-xl text-2xl font-bold transition-colors">+</button>
+                    </div>
+                </div>
+
+                <div class="flex gap-3">
+                    <button type="button" id="cancel-add-inventory" class="flex-1 bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500 text-gray-800 dark:text-gray-200 rounded-xl py-3 font-bold transition-colors">
+                        إلغاء
+                    </button>
+                    <button type="submit" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white rounded-xl py-3 font-bold transition-colors shadow-md">
+                        💾 حفظ
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <!-- Footer Container -->
+    <div id="footer-container"></div>
+
+    <!-- Scripts -->
+    <script src="storage.js"></script>
+    <script src="utils.js"></script>
+    <script src="components.js"></script>
+    <script src="inventory.js"></script>
+
+</body>
+</html>

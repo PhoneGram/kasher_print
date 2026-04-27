@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1e293b">
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="manifest" href="manifest.json">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Tajawal', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <title>الكاشير - المحفظة</title>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen transition-colors duration-300">
+
+    <!-- Header Container -->
+    <div id="header-container"></div>
+
+    <!-- Main Content -->
+    <main class="pt-20 pb-24 px-4 max-w-2xl mx-auto">
+        
+        <h2 class="text-xl font-bold mb-4 text-center">💰 المحفظة</h2>
+
+        <!-- بطاقات الحسابات -->
+        <div class="grid grid-cols-2 gap-4 mb-6">
+            
+            <!-- الحساب الرئيسي -->
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-5 text-center">
+                <h3 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">🏦 الحساب الرئيسي</h3>
+                <p id="wallet-main-balance" class="text-2xl font-bold text-blue-600 dark:text-blue-400 mb-4">0</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mb-3" id="wallet-currency-main">د.ع</p>
+                <div class="flex gap-2">
+                    <button id="deposit-main-btn" class="flex-1 bg-green-500 hover:bg-green-600 text-white rounded-lg py-2 text-sm font-bold transition-colors">
+                        📥 إيداع
+                    </button>
+                    <button id="withdraw-main-btn" class="flex-1 bg-red-500 hover:bg-red-600 text-white rounded-lg py-2 text-sm font-bold transition-colors">
+                        📤 سحب
+                    </button>
+                </div>
+            </div>
+
+            <!-- حساب العامل -->
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-5 text-center">
+                <h3 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">👤 العامل</h3>
+                <p id="wallet-worker-balance" class="text-2xl font-bold text-green-600 dark:text-green-400 mb-4">0</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mb-3" id="wallet-currency-worker">د.ع</p>
+                <div class="flex gap-2">
+                    <button id="deposit-worker-btn" class="flex-1 bg-green-500 hover:bg-green-600 text-white rounded-lg py-2 text-sm font-bold transition-colors">
+                        📥 إيداع
+                    </button>
+                    <button id="withdraw-worker-btn" class="flex-1 bg-red-500 hover:bg-red-600 text-white rounded-lg py-2 text-sm font-bold transition-colors">
+                        📤 سحب
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- سجل الحركات -->
+        <h3 class="text-lg font-bold mb-3">📋 سجل الحركات</h3>
+
+        <!-- رسالة عدم وجود حركات -->
+        <div id="no-transactions-msg" class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 text-center hidden">
+            <p class="text-gray-500 dark:text-gray-400 text-lg">لا توجد حركات حتى الآن</p>
+        </div>
+
+        <!-- قائمة الحركات -->
+        <div id="transactions-list" class="space-y-3"></div>
+
+    </main>
+
+    <!-- نافذة إيداع/سحب (مودال) -->
+    <div id="wallet-transaction-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-sm p-6">
+            
+            <h3 id="modal-transaction-title" class="text-lg font-bold mb-4 text-center"></h3>
+
+            <form id="wallet-transaction-form" class="space-y-4">
+                
+                <input type="hidden" id="transaction-account" value="">
+                <input type="hidden" id="transaction-type" value="">
+
+                <div>
+                    <label class="block text-sm font-medium mb-2">المبلغ <span class="text-red-500">*</span></label>
+                    <input type="number" id="transaction-amount" min="1" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="أدخل المبلغ..." required>
+                </div>
+
+                <div class="flex gap-3">
+                    <button type="button" id="cancel-transaction" class="flex-1 bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500 text-gray-800 dark:text-gray-200 rounded-xl py-3 font-bold transition-colors">
+                        إلغاء
+                    </button>
+                    <button type="submit" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white rounded-xl py-3 font-bold transition-colors shadow-md">
+                        💾 حفظ
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <!-- Footer Container -->
+    <div id="footer-container"></div>
+
+    <!-- Scripts -->
+    <script src="storage.js"></script>
+    <script src="utils.js"></script>
+    <script src="components.js"></script>
+    <script src="wallet.js"></script>
+
+</body>
+</html>

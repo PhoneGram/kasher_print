@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1e293b">
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="manifest" href="manifest.json">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Tajawal', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <title>الكاشير - الإعدادات</title>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen transition-colors duration-300">
+
+    <!-- Header Container -->
+    <div id="header-container"></div>
+
+    <!-- Main Content -->
+    <main class="pt-20 pb-24 px-4 max-w-lg mx-auto">
+        
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6">
+            <h2 class="text-xl font-bold mb-6 text-center">⚙️ الإعدادات</h2>
+
+            <form id="settings-form" class="space-y-5">
+                
+                <!-- اسم المكتبة -->
+                <div>
+                    <label class="block text-sm font-medium mb-2">🏢 اسم المكتبة</label>
+                    <input type="text" id="library-name" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="أدخل اسم المكتبة...">
+                </div>
+
+                <!-- سعر المطبوعة الواحدة -->
+                <div>
+                    <label class="block text-sm font-medium mb-2">💵 سعر المطبوعة الواحدة</label>
+                    <input type="number" id="print-price" min="1" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="أدخل سعر المطبوعة...">
+                </div>
+
+                <!-- العملة -->
+                <div>
+                    <label class="block text-sm font-medium mb-2">💱 العملة</label>
+                    <input type="text" id="currency-symbol" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="مثال: د.ع">
+                </div>
+
+                <!-- نسبة التقسيم -->
+                <div>
+                    <label class="block text-sm font-medium mb-2">📊 نسبة الحساب الرئيسي (%)</label>
+                    <div class="flex items-center gap-3">
+                        <input type="range" id="main-percentage" min="0" max="100" value="75" class="flex-1 h-2 bg-gray-200 dark:bg-gray-600 rounded-lg appearance-none cursor-pointer accent-blue-500">
+                        <span id="main-percentage-display" class="text-lg font-bold w-12 text-center">75</span>
+                        <span class="text-sm text-gray-500">%</span>
+                    </div>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 text-center">
+                        حساب العامل: <span id="worker-percentage-display" class="font-bold">25</span>%
+                    </p>
+                </div>
+
+                <!-- أزرار التحكم -->
+                <div class="space-y-3 pt-2">
+                    
+                    <!-- زر حفظ الإعدادات -->
+                    <button type="submit" id="save-settings" class="w-full bg-blue-500 hover:bg-blue-600 text-white rounded-xl py-3 font-bold transition-colors shadow-md">
+                        💾 حفظ الإعدادات
+                    </button>
+
+                    <!-- زر تحميل البيانات -->
+                    <button type="button" id="export-data" class="w-full bg-green-500 hover:bg-green-600 text-white rounded-xl py-3 font-bold transition-colors shadow-md">
+                        📥 تحميل البيانات
+                    </button>
+
+                    <!-- زر استرداد البيانات -->
+                    <button type="button" id="import-data-btn" class="w-full bg-purple-500 hover:bg-purple-600 text-white rounded-xl py-3 font-bold transition-colors shadow-md">
+                        📤 استرداد البيانات
+                    </button>
+                    <input type="file" id="import-file-input" accept=".json" class="hidden">
+
+                    <!-- زر إعادة التعيين -->
+                    <button type="button" id="reset-data" class="w-full bg-red-500 hover:bg-red-600 text-white rounded-xl py-3 font-bold transition-colors shadow-md">
+                        🗑️ إعادة التعيين
+                    </button>
+
+                </div>
+
+            </form>
+        </div>
+
+    </main>
+
+    <!-- نافذة تأكيد إعادة التعيين -->
+    <div id="reset-confirm-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-sm p-6 text-center">
+            
+            <div class="text-5xl mb-4">⚠️</div>
+            <h3 class="text-lg font-bold mb-2">تأكيد إعادة التعيين</h3>
+            <p class="text-gray-500 dark:text-gray-400 mb-6">سيتم حذف جميع البيانات نهائياً! هل أنت متأكد؟</p>
+
+            <div class="flex gap-3">
+                <button id="cancel-reset" class="flex-1 bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500 text-gray-800 dark:text-gray-200 rounded-xl py-3 font-bold transition-colors">
+                    إلغاء
+                </button>
+                <button id="confirm-reset" class="flex-1 bg-red-500 hover:bg-red-600 text-white rounded-xl py-3 font-bold transition-colors shadow-md">
+                    🗑️ تأكيد الحذف
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer Container -->
+    <div id="footer-container"></div>
+
+    <!-- Scripts -->
+    <script src="storage.js"></script>
+    <script src="utils.js"></script>
+    <script src="components.js"></script>
+    <script src="settings.js"></script>
+
+</body>
+</html>

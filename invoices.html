@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1e293b">
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="manifest" href="manifest.json">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Tajawal', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <title>الكاشير - الفواتير</title>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen transition-colors duration-300">
+
+    <!-- Header Container -->
+    <div id="header-container"></div>
+
+    <!-- Main Content -->
+    <main class="pt-20 pb-24 px-4 max-w-2xl mx-auto">
+        
+        <h2 class="text-xl font-bold mb-4 text-center">📄 الفواتير</h2>
+
+        <!-- رسالة عدم وجود فواتير -->
+        <div id="no-invoices-msg" class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 text-center hidden">
+            <p class="text-gray-500 dark:text-gray-400 text-lg">لا توجد فواتير حتى الآن</p>
+            <a href="create-invoice.html" class="inline-block mt-4 bg-blue-500 hover:bg-blue-600 text-white rounded-xl px-6 py-2 font-bold transition-colors">
+                📝 إنشاء أول فاتورة
+            </a>
+        </div>
+
+        <!-- قائمة الفواتير -->
+        <div id="invoices-list" class="space-y-3"></div>
+
+    </main>
+
+    <!-- نافذة تفاصيل الفاتورة (مودال) -->
+    <div id="invoice-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-md p-6 relative">
+            
+            <button id="close-modal" class="absolute top-3 left-3 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 text-2xl leading-none">&times;</button>
+            
+            <div id="modal-header-preview" class="text-center mb-4 pb-4 border-b border-gray-200 dark:border-gray-700">
+                <img src="logo.png" alt="الكاشير" class="w-16 h-16 mx-auto mb-2 object-contain" onerror="this.style.display='none'">
+                <h3 class="text-lg font-bold">الكاشير</h3>
+                <p id="modal-library-name" class="text-sm text-gray-500 dark:text-gray-400"></p>
+            </div>
+
+            <div id="modal-invoice-details" class="space-y-3 mb-6"></div>
+
+            <button id="download-invoice-image" class="w-full bg-green-500 hover:bg-green-600 text-white rounded-xl py-3 font-bold transition-colors shadow-md">
+                📸 حفظ كـ صورة
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer Container -->
+    <div id="footer-container"></div>
+
+    <!-- Scripts -->
+    <script src="storage.js"></script>
+    <script src="utils.js"></script>
+    <script src="components.js"></script>
+    <script src="image-download.js"></script>
+    <script src="invoices.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1e293b">
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="manifest" href="manifest.json">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Tajawal', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <title>الكاشير - الرئيسية</title>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen transition-colors duration-300">
+
+    <!-- Header Container -->
+    <div id="header-container"></div>
+
+    <!-- Main Content -->
+    <main class="pt-20 pb-24 px-4 max-w-4xl mx-auto">
+        
+        <!-- بطاقة الأرصدة والإحصائيات -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 mb-6">
+            <h2 class="text-xl font-bold mb-4 text-center">📊 الأرصدة</h2>
+            
+            <div class="grid grid-cols-2 gap-4 mb-6">
+                <div class="bg-blue-50 dark:bg-blue-900/30 rounded-xl p-4 text-center">
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">الحساب الرئيسي</p>
+                    <p id="main-balance" class="text-2xl font-bold text-blue-600 dark:text-blue-400">0</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1" id="currency-display-main">د.ع</p>
+                </div>
+                <div class="bg-green-50 dark:bg-green-900/30 rounded-xl p-4 text-center">
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">حساب العامل</p>
+                    <p id="worker-balance" class="text-2xl font-bold text-green-600 dark:text-green-400">0</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1" id="currency-display-worker">د.ع</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-3">
+                <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-3 text-center">
+                    <p class="text-xs text-gray-600 dark:text-gray-400 mb-1">مطبوعات اليوم</p>
+                    <p id="today-prints" class="text-lg font-bold">0</p>
+                </div>
+                <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-3 text-center">
+                    <p class="text-xs text-gray-600 dark:text-gray-400 mb-1">مطبوعات الشهر</p>
+                    <p id="month-prints" class="text-lg font-bold">0</p>
+                </div>
+                <div class="bg-red-50 dark:bg-red-900/30 rounded-xl p-3 text-center cursor-pointer hover:bg-red-100 dark:hover:bg-red-900/50 transition-colors" onclick="window.location.href='invoices.html?filter=unpaid'">
+                    <p class="text-xs text-gray-600 dark:text-gray-400 mb-1">غير المدفوعات</p>
+                    <p id="unpaid-count" class="text-lg font-bold text-red-600 dark:text-red-400">0</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- الأزرار الرئيسية -->
+        <div class="grid grid-cols-2 gap-3">
+            <a href="create-invoice.html" class="bg-blue-500 hover:bg-blue-600 text-white rounded-xl p-4 text-center font-bold text-lg transition-colors shadow-md">
+                📝 إنشاء فاتورة
+            </a>
+            <a href="invoices.html" class="bg-purple-500 hover:bg-purple-600 text-white rounded-xl p-4 text-center font-bold text-lg transition-colors shadow-md">
+                📄 الفواتير
+            </a>
+            <a href="customers.html" class="bg-green-500 hover:bg-green-600 text-white rounded-xl p-4 text-center font-bold text-lg transition-colors shadow-md">
+                👥 الزبائن
+            </a>
+            <a href="inventory.html" class="bg-yellow-500 hover:bg-yellow-600 text-white rounded-xl p-4 text-center font-bold text-lg transition-colors shadow-md">
+                📦 المخزون
+            </a>
+            <a href="wallet.html" class="bg-indigo-500 hover:bg-indigo-600 text-white rounded-xl p-4 text-center font-bold text-lg transition-colors shadow-md">
+                💰 المحفظة
+            </a>
+            <a href="statistics.html" class="bg-pink-500 hover:bg-pink-600 text-white rounded-xl p-4 text-center font-bold text-lg transition-colors shadow-md">
+                📊 الاحصائيات
+            </a>
+        </div>
+
+    </main>
+
+    <!-- Footer Container -->
+    <div id="footer-container"></div>
+
+    <!-- Scripts -->
+    <script src="storage.js"></script>
+    <script src="utils.js"></script>
+    <script src="components.js"></script>
+    <script src="main.js"></script>
+
+</body>
+</html>

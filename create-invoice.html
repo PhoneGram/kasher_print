@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1e293b">
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="manifest" href="manifest.json">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Tajawal', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <title>الكاشير - إنشاء فاتورة</title>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen transition-colors duration-300">
+
+    <!-- Header Container -->
+    <div id="header-container"></div>
+
+    <!-- Main Content -->
+    <main class="pt-20 pb-24 px-4 max-w-lg mx-auto">
+        
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6">
+            <h2 class="text-xl font-bold mb-6 text-center">📝 إنشاء فاتورة جديدة</h2>
+
+            <form id="create-invoice-form" class="space-y-5">
+                
+                <!-- اختيار الزبون -->
+                <div>
+                    <label class="block text-sm font-medium mb-2">الزبون <span class="text-red-500">*</span></label>
+                    <select id="customer-select" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                        <option value="">اختر زبون...</option>
+                    </select>
+                </div>
+
+                <!-- عدد المطبوعات -->
+                <div>
+                    <label class="block text-sm font-medium mb-2">عدد المطبوعات <span class="text-red-500">*</span></label>
+                    <div class="flex items-center gap-3">
+                        <button type="button" id="decrease-qty" class="bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 w-12 h-12 rounded-xl text-2xl font-bold transition-colors">-</button>
+                        <input type="number" id="print-qty" value="1" min="1" class="flex-1 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 text-center text-lg font-bold focus:outline-none focus:ring-2 focus:ring-blue-500" readonly required>
+                        <button type="button" id="increase-qty" class="bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 w-12 h-12 rounded-xl text-2xl font-bold transition-colors">+</button>
+                    </div>
+                </div>
+
+                <!-- التاريخ -->
+                <div>
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="text-sm font-medium">التاريخ <span class="text-red-500">*</span></label>
+                        <button type="button" id="toggle-date-mode" class="text-xs bg-gray-200 dark:bg-gray-600 px-3 py-1 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-500 transition-colors">
+                            🔄 يدوي
+                        </button>
+                    </div>
+                    <input type="date" id="invoice-date" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500" disabled>
+                </div>
+
+                <!-- الملاحظات -->
+                <div>
+                    <label class="block text-sm font-medium mb-2">ملاحظات</label>
+                    <textarea id="invoice-notes" rows="3" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="ملاحظات اختيارية..."></textarea>
+                </div>
+
+                <!-- حالة الفاتورة -->
+                <div>
+                    <label class="block text-sm font-medium mb-3">حالة الفاتورة <span class="text-red-500">*</span></label>
+                    <div class="flex gap-3">
+                        <button type="button" id="status-paid" class="flex-1 bg-green-100 dark:bg-green-900/50 border-2 border-green-300 dark:border-green-700 rounded-xl py-3 font-bold text-green-700 dark:text-green-300 hover:bg-green-200 dark:hover:bg-green-900/70 transition-colors">
+                            💰 مدفوعة
+                        </button>
+                        <button type="button" id="status-unpaid" class="flex-1 bg-red-100 dark:bg-red-900/50 border-2 border-red-500 dark:border-red-500 rounded-xl py-3 font-bold text-red-700 dark:text-red-300 hover:bg-red-200 dark:hover:bg-red-900/70 transition-colors">
+                            ❌ غير مدفوعة
+                        </button>
+                    </div>
+                    <input type="hidden" id="invoice-status" value="">
+                </div>
+
+                <!-- المجموع -->
+                <div class="bg-blue-50 dark:bg-blue-900/30 rounded-xl p-4 text-center">
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">المجموع</p>
+                    <p id="total-amount" class="text-3xl font-bold text-blue-600 dark:text-blue-400">0</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1" id="invoice-currency">د.ع</p>
+                </div>
+
+                <!-- زر الحفظ -->
+                <button type="submit" id="save-invoice" class="w-full bg-blue-500 hover:bg-blue-600 text-white rounded-xl py-3 font-bold text-lg transition-colors shadow-md disabled:opacity-50 disabled:cursor-not-allowed">
+                    💾 حفظ الفاتورة
+                </button>
+
+            </form>
+        </div>
+
+    </main>
+
+    <!-- Footer Container -->
+    <div id="footer-container"></div>
+
+    <!-- Scripts -->
+    <script src="storage.js"></script>
+    <script src="utils.js"></script>
+    <script src="components.js"></script>
+    <script src="create-invoice.js"></script>
+
+</body>
+</html>

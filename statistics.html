@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1e293b">
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="manifest" href="manifest.json">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Tajawal', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <title>الكاشير - الاحصائيات</title>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen transition-colors duration-300">
+
+    <!-- Header Container -->
+    <div id="header-container"></div>
+
+    <!-- Main Content -->
+    <main class="pt-20 pb-24 px-4 max-w-4xl mx-auto">
+        
+        <h2 class="text-xl font-bold mb-4 text-center">📊 الاحصائيات</h2>
+
+        <!-- أزرار اختيار نوع الاحصائية -->
+        <div class="flex gap-2 mb-4">
+            <button id="stats-day-btn" class="flex-1 bg-blue-500 text-white rounded-xl py-3 font-bold transition-colors hover:bg-blue-600 shadow-md">
+                📅 يوم
+            </button>
+            <button id="stats-month-btn" class="flex-1 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl py-3 font-bold transition-colors hover:bg-gray-300 dark:hover:bg-gray-600">
+                📆 شهر
+            </button>
+            <button id="stats-year-btn" class="flex-1 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl py-3 font-bold transition-colors hover:bg-gray-300 dark:hover:bg-gray-600">
+                📈 سنة
+            </button>
+        </div>
+
+        <input type="hidden" id="stats-mode" value="day">
+
+        <!-- حقل تحديد التاريخ -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-4 mb-6">
+            <div id="date-selector-container">
+                <!-- يُملأ ديناميكياً حسب الاختيار -->
+            </div>
+        </div>
+
+        <!-- جدول الاحصائيات -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-4 mb-6 overflow-x-auto">
+            
+            <!-- رسالة عدم وجود بيانات -->
+            <div id="no-stats-msg" class="text-center py-8 hidden">
+                <p class="text-gray-500 dark:text-gray-400 text-lg">لا توجد بيانات للفترة المحددة</p>
+            </div>
+
+            <!-- الجدول -->
+            <div id="stats-table-container" class="hidden">
+                <table class="w-full text-sm">
+                    <thead id="stats-table-head" class="border-b border-gray-200 dark:border-gray-700">
+                        <!-- يُملأ ديناميكياً -->
+                    </thead>
+                    <tbody id="stats-table-body">
+                        <!-- يُملأ ديناميكياً -->
+                    </tbody>
+                </table>
+
+                <!-- صف المجموع -->
+                <div id="stats-total-row" class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700 font-bold text-center bg-blue-50 dark:bg-blue-900/30 rounded-xl p-3">
+                    <!-- يُملأ ديناميكياً -->
+                </div>
+            </div>
+
+        </div>
+
+        <!-- زر حفظ كصورة -->
+        <button id="download-stats-image" class="w-full bg-green-500 hover:bg-green-600 text-white rounded-xl py-3 font-bold text-lg transition-colors shadow-md disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+            📸 حفظ كـ صورة
+        </button>
+
+    </main>
+
+    <!-- Footer Container -->
+    <div id="footer-container"></div>
+
+    <!-- Scripts -->
+    <script src="storage.js"></script>
+    <script src="utils.js"></script>
+    <script src="components.js"></script>
+    <script src="image-download.js"></script>
+    <script src="statistics.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+</body>
+</html>
